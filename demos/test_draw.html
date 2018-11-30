@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="../p5lite.js"></script>
+  <title>p5lite test</title>
+  <script>
+    function setup() {
+      createCanvas(400, 400);
+      background(240);
+
+      stroke(0);
+      noFill();
+      rect(50, 50, 150, 100);
+      
+      push();
+      strokeWeight(5);
+      stroke('black')
+      fill('white')
+      ellipse(125, 100, 150, 100);
+      pop();
+
+      fill('brown') 
+      ellipse(125, 100, 90);
+
+      fill('black')
+      ellipse(125, 100, 20);
+
+      noFill();
+      fill(200, 100, 0, 75);
+      ellipse(200, 150, 200);
+    }
+  </script
+</head>
+<body onload="setup()">
+  <canvas id="p5" height="300" width="300"><</canvas>
+  <canvas id="cnv1" height="300" width="300"></canvas>
+  <canvas id="cnv2"></canvas>
+</body>
+</html>
