@@ -53,6 +53,7 @@ var height, width; //globals exposed
       cnv.ctx = ctx;
       ctx._doFill = true;
       ctx._doStroke = true;
+      ctx.font = '12px sans-serif';
     } else {
       ctx = cnv.ctx;
     }
@@ -62,7 +63,7 @@ var height, width; //globals exposed
     width = cnv.width;
   }
 
-  e.createCanvas = function (w, h, id='p5') {
+  e.createCanvas = function (w, h, id = 'p5') {
     e.canvas(id, { width: w, height: h });
   }
 
@@ -73,7 +74,7 @@ var height, width; //globals exposed
     } else if (arguments.length === 1) {
       colorSpec = `rgb(${r}, ${r}, ${r})`;
     } else {
-      if(a > 1) a /= 255; // allows alpha 0-255 (p5 style)
+      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
       colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
     }
     ctx.fillStyle = colorSpec;
@@ -111,7 +112,7 @@ var height, width; //globals exposed
     } else if (arguments.length === 1) {
       colorSpec = `rgb(${r}, ${r}, ${r})`;
     } else {
-      if(a > 1) a /= 255; // allows alpha 0-255 (p5 style)
+      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
       colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
     }
     ctx._doFill = true;
@@ -160,7 +161,7 @@ var height, width; //globals exposed
     } else if (arguments.length === 1) {
       colorSpec = `rgb(${r}, ${r}, ${r})`;
     } else {
-      if(a > 1) a /= 255; // allows alpha 0-255 (p5 style)
+      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
       colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
     }
     ctx._doStroke = true;
@@ -169,6 +170,11 @@ var height, width; //globals exposed
 
   e.strokeWeight = function (w) {
     this.lineWidth(w);
+  }
+
+  e.text = function (text, x, y) {
+    if (ctx._doFill) ctx.fillText(text, x, y);
+    if (ctx._doStroke) ctx.strokeText(text, x, y);
   }
 
 
@@ -193,7 +199,7 @@ var height, width; //globals exposed
   e.constrain = (x, lo, hi) => Math.max(Math.min(x, hi), lo);
   e.cos = x => Math.cos(x);
   e.degrees = x => (e.RAD_TO_DEG * x);
-  e.dist = (x1, y1, x2, y2) => e.sqrt(e.sq(x2-x1) + e.sq(y2-y1));
+  e.dist = (x1, y1, x2, y2) => e.sqrt(e.sq(x2 - x1) + e.sq(y2 - y1));
   e.exp = x => Math.exp(x);
   e.floor = x => Math.floor(x);
   e.log = x => Math.log(x);

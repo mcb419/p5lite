@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="../p5lite.js"></script>
+  <title>p5lite test</title>
+  <script>
+    function setup() {
+      createCanvas(400, 300, 'cnv1');
+      background(240);
+      fill('cyan');
+      ellipse(150, 150, 50);
+
+      createCanvas(400, 300, 'cnv2');
+      background('lightCyan');
+      fill(50);
+      noStroke();
+      text('A second canvas can be useful', 15, 15);
+      fill(200, 100, 0, 0.5);
+      rect(100, 100, 150, 100);
+      fill(0, 100, 200, 0.5);
+      ellipse(250, 200, 150, 100);
+    }
+  </script
+</head>
+<body onload="setup()">
+</body>
+</html>
