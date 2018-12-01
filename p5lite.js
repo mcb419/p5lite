@@ -16,25 +16,25 @@ var height, width; //globals exposed
 // EVENT LOOP
 //============
 
-(function(e) {
+(function (e) {
 
   var FPS = 60; // frameRate (frames per second)
-  var UPT = 1; // updatesPerTick
-  var paused;
+  var UPT = 1;  // updatesPerTick
+  var paused;   // paused status
 
-  e.p5setup = function() {
+  e.p5setup = function () {
     paused = true;
     e.setup(); // user
-    if(!e.gcnv())e.createCanvas(300, 100); // default if user didn't create a canvas
+    if (!e.gcnv()) e.createCanvas(300, 100); // default if user didn't create a canvas
     e.reset(); //user
     e.draw(); // user
   };
 
-  e.p5pause = () => {paused = true;};
-  e.p5reset = () => {paused = true; e.reset(); };
-  e.p5run =  () => { paused = false; e.p5tick(); };
-  e.p5step = () => {paused = true; e.update(); e.draw();};
-  e.p5tick = function() {
+  e.p5pause = () => { paused = true; };
+  e.p5reset = () => { paused = true; e.reset(); e.draw(); };
+  e.p5run = () => { paused = false; e.p5tick(); };
+  e.p5step = () => { paused = true; e.update(); e.draw(); };
+  e.p5tick = function () {
     if (!paused) {
       setTimeout(e.p5tick, 1000 / FPS);
       for (let i = 0; i < UPT; i++) e.update();
@@ -50,21 +50,21 @@ var height, width; //globals exposed
   e.updatesPerTick = (num) => num ? UPT = num : UPT;
 
   // empty versions of user-defined functions
-  e.draw = () => {};
-  e.reset = () => {};
-  e.setup = () => {};
-  e.update = () => {};
+  e.draw = () => { };
+  e.reset = () => { };
+  e.setup = () => { };
+  e.update = () => { };
 
   // call p5setup once DOM is loaded
   if (document.readyState === 'complete') {
     e.p5setup();
   } else {
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       document.removeEventListener('DOMContentLoaded', arguments.callee, false);
       e.p5setup();
     }, false);
   }
-  
+
 })(window);
 
 //===========
@@ -207,11 +207,11 @@ var height, width; //globals exposed
     if (ctx._doStroke) ctx.stroke();
   };
 
-  e.rotate = function(angle) {
+  e.rotate = function (angle) {
     ctx.rotate(angle);
   };
 
-  e.scale = function(sx, sy=sx) {
+  e.scale = function (sx, sy = sx) {
     ctx.scale(sx, sy);
   };
 
@@ -238,10 +238,9 @@ var height, width; //globals exposed
     if (ctx._doFill) ctx.fillText(text, x, y);
   };
 
-  e.translate = function(x, y) {
+  e.translate = function (x, y) {
     ctx.translate(x, y);
   };
-
 
 })(window);
 
@@ -313,4 +312,5 @@ var height, width; //globals exposed
   e.tan = x => Math.tan(x);
   e.atan2 = (y, x) => Math.atan2(y, x);
   e.pow = (x, y) => Math.pow(x, y);
+
 })(window);
