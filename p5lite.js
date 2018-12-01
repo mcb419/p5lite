@@ -234,8 +234,12 @@ var height, width; //globals exposed
     this.lineWidth(w);
   };
 
-  e.text = function (text, x, y) {
-    if (ctx._doFill) ctx.fillText(text, x, y);
+  e.text = function (str, x, y) {
+    if (ctx._doFill) ctx.fillText(str, x, y);
+  };
+
+  e.textSize = function(fontSize) {
+    ctx.font = fontSize + "px sans-serif";
   };
 
   e.translate = function (x, y) {
