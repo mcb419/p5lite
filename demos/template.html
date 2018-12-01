@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="../p5lite.js"></script>
+  <title>p5lite template</title>
+  <style>
+    body {
+      margin-left: 10px;
+      margin-bottom: 100px;
+    }
+
+    button {
+      height: 25px;
+      margin: 5px 1px;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #b_reset {
+      background-color: wheat
+    }
+
+    #b_run {
+      background-color: lightGreen
+    }
+
+    #b_pause {
+      background-color: pink
+    }
+
+    #b_single {
+      background-color: lavendar
+    }
+  </style>
+  <script>
+    function setup() {
+      createCanvas(400, 300);
+    }
+
+    function reset() {
+      itick = 0;
+    }
+
+    function draw() {
+      background('lightcyan');
+      fill('blue');
+      text(itick, 15, 15);
+    }
+
+    function update() {
+      itick++;
+    }
+
+    </script>
+</head>
+<body>
+    <h2>Sample template with p5lite.js</h2>
+    <p>This is a simple project template for MCB 419.</p>
+		<canvas id="p5"></canvas>
+		<button id="b_reset" onclick="p5reset()">Reset</button>
+		<button id="b_run" onclick="p5run()">Run</button>
+		<button id="b_pause" onclick="p5pause()">Pause</button>
+    <button id="b_single" onclick="p5step()">Single Step</button>
+    <h3>Discussion</h3>
+    <p>Add some more text here.</p>
+  </body>
+  </html>
