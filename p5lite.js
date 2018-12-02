@@ -18,8 +18,8 @@ var height, width; //globals exposed
 
 (function (e) {
 
-  var FPS = 60; // frameRate (frames per second)
-  var UPT = 1;  // updatesPerTick
+  var _FPS = 60; // frameRate (frames per second)
+  var _updatesPerFrame = 1;  // updatesPerTick
   var paused;   // paused status
 
   e.p5setup = function () {
@@ -36,24 +36,43 @@ var height, width; //globals exposed
   e.p5step = () => { paused = true; e.update(); e.draw(); };
   e.p5tick = function () {
     if (!paused) {
-      setTimeout(e.p5tick, 1000 / FPS);
-      for (let i = 0; i < UPT; i++) e.update();
+      setTimeout(e.p5tick, 1000 / _FPS);
+      for (let i = 0; i < _updatesPerFrame; i++) e.update();
     }
     e.draw();
   };
 
-  e.frameRate = (rate) => rate ? FPS = rate : FPS;
+  e.frameRate = (rate) => rate ? _FPS = rate : _FPS;
   e.isPaused = () => paused;
   e.loop = e.p5run;
+  e.millis = performance.now;
   e.noLoop = e.p5pause;
   e.redraw = () => { paused = true; e.draw(); };
-  e.updatesPerTick = (num) => num ? UPT = num : UPT;
+  e.updatesPerTick = (num) => num ? _updatesPerFrame = num : _updatesPerFrame;
 
   // empty versions of user-defined functions
   e.draw = () => { };
   e.reset = () => { };
   e.setup = () => { };
   e.update = () => { };
+
+  e.recommendUpdatesPerTick = function() {
+    // estimates how many updates can be completed each frame
+    e.reset();
+    // estimate number of updates 
+    let ndone = 0;
+    let ntest = 100;
+    let ts = performance.now();
+    do {
+      for (let i=0; i<ntest; i++) e.update();
+      ndone += ntest;
+      ntest *= 2;
+    } while (performance.now() - ts < 10);
+    let dt = performance.now() - ts;
+    console.log('msec per update:' + dt/ndone);
+    console.log('msec per frame:', 1000/_FPS);
+    console.log('recommended updatesPerTick: ' + Math.floor((1000/_FPS)/(dt/ndone)));
+  };
 
   // call p5setup once DOM is loaded
   if (document.readyState === 'complete') {
@@ -65,6 +84,18 @@ var height, width; //globals exposed
     }, false);
   }
 
+})(window);
+
+//======
+// DOM
+//======
+(function (e) {
+  e.select = function(id) {
+    if (id[0] === '#') id = id.slice(1);
+    let element  = document.getElementById(id);
+    if (!element) throw new Error('could not find ' + id);
+    return element;
+  };
 })(window);
 
 //===========
@@ -141,7 +172,7 @@ var height, width; //globals exposed
     if (typeof a[0] === 'string') return a[0];
     if (a.length === 1) return `rgb(${a[0]}, ${a[0]}, ${a[0]})`;
     if (a.length === 3) return `rgb(${a[0]}, ${a[1]}, ${a[2]})`;
-    let alpha = a[3] <= 1 ? a[3] : a[3] / 255
+    let alpha = a[3] <= 1 ? a[3] : a[3] / 255;
     return `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha})`;
   };
 
@@ -229,7 +260,7 @@ var height, width; //globals exposed
   };
 
   e.textSize = function(fontSize) {
-    ctx.font = fontSize + "px sans-serif";
+    ctx.font = fontSize + 'px sans-serif';
   };
 
   e.translate = function (x, y) {
