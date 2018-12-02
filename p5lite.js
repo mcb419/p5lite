@@ -37,7 +37,10 @@ var height, width; //globals exposed
   e.p5tick = function () {
     if (!paused) {
       setTimeout(e.p5tick, 1000 / _FPS);
-      for (let i = 0; i < _updatesPerFrame; i++) e.update();
+      for (let i = 0; i < _updatesPerFrame; i++) {
+        e.update();
+        if (e.isFinished()) {paused = true; break;}
+      }
     }
     e.draw();
   };
@@ -48,15 +51,16 @@ var height, width; //globals exposed
   e.millis = performance.now;
   e.noLoop = e.p5pause;
   e.redraw = () => { paused = true; e.draw(); };
-  e.updatesPerTick = (num) => num ? _updatesPerFrame = num : _updatesPerFrame;
+  e.updatesPerFrame = (num) => num ? _updatesPerFrame = num : _updatesPerFrame;
 
   // empty versions of user-defined functions
   e.draw = () => { };
   e.reset = () => { };
   e.setup = () => { };
   e.update = () => { };
+  e.isFinished = () => false;
 
-  e.recommendUpdatesPerTick = function() {
+  e.recommendUpdatesPerFrame = function() {
     // estimates how many updates can be completed each frame
     e.reset();
     // estimate number of updates 
@@ -71,7 +75,7 @@ var height, width; //globals exposed
     let dt = performance.now() - ts;
     console.log('msec per update:' + dt/ndone);
     console.log('msec per frame:', 1000/_FPS);
-    console.log('recommended updatesPerTick: ' + Math.floor((1000/_FPS)/(dt/ndone)));
+    console.log('recommended updatesPerFrame: ' + Math.floor((1000/_FPS)/(dt/ndone)));
   };
 
   // call p5setup once DOM is loaded
