@@ -120,17 +120,11 @@ var height, width; //globals exposed
     e.canvas(id, { width: w, height: h });
   };
 
-  e.background = function (r, g, b, a = 1.0) {
-    var colorSpec;
-    if (typeof r === 'string') {
-      colorSpec = arguments[0];
-    } else if (arguments.length === 1) {
-      colorSpec = `rgb(${r}, ${r}, ${r})`;
-    } else {
-      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
-      colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
-    }
-    ctx.fillStyle = colorSpec;
+  e.background = function (r, g, b, a) {
+    if (arguments.length === 0) ctx.fillStyle = 'gray';
+    else if (arguments.length === 1) ctx.fillStyle = e.color(r);
+    else if (arguments.length === 3) ctx.fillStyle = e.color(r, g, b);
+    else if (arguments.length === 4) ctx.fillStyle = e.color(r, g, b, a);
     ctx.fillRect(0, 0, width, height);
   };
 
@@ -140,6 +134,15 @@ var height, width; //globals exposed
     ctx.closePath();
     if (ctx._doStroke) ctx.stroke();
     if (ctx._doFill) ctx.fill();
+  };
+
+  e.color = function () {
+    let a = arguments;
+    if (typeof a[0] === 'string') return a[0];
+    if (a.length === 1) return `rgb(${a[0]}, ${a[0]}, ${a[0]})`;
+    if (a.length === 3) return `rgb(${a[0]}, ${a[1]}, ${a[2]})`;
+    let alpha = a[3] <= 1 ? a[3] : a[3] / 255
+    return `rgba(${a[0]}, ${a[1]}, ${a[2]}, ${alpha})`;
   };
 
   e.crestore = function () {
@@ -158,18 +161,12 @@ var height, width; //globals exposed
     if (ctx._doStroke) ctx.stroke();
   };
 
-  e.fill = function (r, g, b, a = 1.0) {
-    var colorSpec;
-    if (typeof r === 'string') {
-      colorSpec = arguments[0];
-    } else if (arguments.length === 1) {
-      colorSpec = `rgb(${r}, ${r}, ${r})`;
-    } else {
-      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
-      colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
-    }
+  e.fill = function (r, g, b, a) {
     ctx._doFill = true;
-    ctx.fillStyle = colorSpec;
+    if (arguments.length === 0) ctx.fillStyle = 'black';
+    else if (arguments.length === 1) ctx.fillStyle = e.color(r);
+    else if (arguments.length === 3) ctx.fillStyle = e.color(r, g, b);
+    else if (arguments.length === 4) ctx.fillStyle = e.color(r, g, b, a);
   };
 
   e.line = function (x1, y1, x2, y2) {
@@ -215,19 +212,12 @@ var height, width; //globals exposed
     ctx.scale(sx, sy);
   };
 
-  e.stroke = function (r, g, b, a = 1.0) {
-    var colorSpec;
-    if (typeof r === 'string') {
-      colorSpec = arguments[0];
-    } else if (arguments.length === 1) {
-      colorSpec = `rgb(${r}, ${r}, ${r})`;
-    } else {
-      if (a > 1) a /= 255; // allows alpha 0-255 (p5 style)
-      colorSpec = `rgba(${r}, ${g}, ${b}, ${a})`;
-
-    }
+  e.stroke = function (r, g, b, a) {
     ctx._doStroke = true;
-    ctx.strokeStyle = colorSpec;
+    if (arguments.length === 0) ctx.strokeStyle = 'black';
+    else if (arguments.length === 1) ctx.strokeStyle = e.color(r);
+    else if (arguments.length === 3) ctx.strokeStyle = e.color(r, g, b);
+    else if (arguments.length === 4) ctx.strokeStyle = e.color(r, g, b, a);
   };
 
   e.strokeWeight = function (w) {
