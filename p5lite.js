@@ -39,7 +39,7 @@ var height, width; //globals exposed
       setTimeout(e.p5tick, 1000 / _FPS);
       for (let i = 0; i < _updatesPerFrame; i++) {
         e.update();
-        if (e.isFinished()) {paused = true; break;}
+        if (e.isFinished()) {paused = true; e.finish(); break;}
       }
     }
     e.draw();
@@ -55,10 +55,11 @@ var height, width; //globals exposed
 
   // empty versions of user-defined functions
   e.draw = () => { };
+  e.finish = () => { };
+  e.isFinished = () => false;
   e.reset = () => { };
   e.setup = () => { };
   e.update = () => { };
-  e.isFinished = () => false;
 
   e.recommendUpdatesPerFrame = function() {
     // estimates how many updates can be completed each frame
@@ -74,7 +75,7 @@ var height, width; //globals exposed
     } while (performance.now() - ts < 10);
     let dt = performance.now() - ts;
     console.log('msec per update:' + dt/ndone);
-    console.log('msec per frame:', 1000/_FPS);
+    console.log('msec per frame at ' + _FPS + 'FPS: ' + 1000/_FPS);
     console.log('recommended updatesPerFrame: ' + Math.floor((1000/_FPS)/(dt/ndone)));
   };
 
@@ -280,7 +281,6 @@ var height, width; //globals exposed
   e.PI = Math.PI;
   e.TWO_PI = 2 * e.PI;
   e.HALF_PI = e.PI / 2;
-  e.QUARTER_PI = e.PI / 4;
   e.DEG_TO_RAD = e.PI / 180;
   e.RAD_TO_DEG = 180 / e.PI;
 
@@ -288,6 +288,7 @@ var height, width; //globals exposed
   e.acos = x => Math.acos(x);
   e.asin = x => Math.asin(x);
   e.atan = x => Math.atan(x);
+  e.atan2 = (y, x) => Math.atan2(y, x);
   e.ceil = x => Math.ceil(x);
   e.constrain = (x, lo, hi) => Math.max(Math.min(x, hi), lo);
   e.cos = x => Math.cos(x);
@@ -339,7 +340,6 @@ var height, width; //globals exposed
   e.sq = x => (x * x);
   e.sqrt = x => Math.sqrt(x);
   e.tan = x => Math.tan(x);
-  e.atan2 = (y, x) => Math.atan2(y, x);
   e.pow = (x, y) => Math.pow(x, y);
 
 })(window);

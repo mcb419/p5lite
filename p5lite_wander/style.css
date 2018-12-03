@@ -1,0 +1,33 @@
+body {
+  margin-bottom: 100px;
+}
+
+button {
+	height: 25px;
+	margin: 5px 1px;
+}
+
+canvas {
+  border: 1px solid gainsboro;
+  display: block;
+}
+
+#b_reset {
+  background-color: wheat
+}
+
+#b_run {
+  background-color: lightGreen
+}
+
+#b_pause {
+  background-color: pink
+}
+
+#b_step {
+  background-color: lavender
+}
+
+#b_wrap {
+  background-color: orange
+}

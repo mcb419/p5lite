@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="../p5lite.js"></script>
+    <script src="Bot.js"></script>
+    <script src="sketch.js"></script>
+    <title>Wandering bots"</title>
+  </head>
+  <body>
+    <h2>Wandering bots</h2>
+		<canvas id="p5"></canvas><br>
+		<button id="b_reset" onclick="p5reset()">Reset</button>
+		<button id="b_run" onclick="p5run()">Run</button>
+		<button id="b_pause" onclick="p5pause()">Pause</button>
+    <button id="b_step" onclick="p5step()">Single Step</button>
+    <br>
+    <button id="b_wrap" onclick="toggleWrap()">Solid/Wrapped</button>
+    <br>
+    <input id="wanderNoise" type="range" max="1.5" step="0.1">
+    <label id="wanderNoiseLabel"></label>
+    <h3>Discussion</h3>
+    <p>Add some more text here.</p>
+  
+</body></html>
